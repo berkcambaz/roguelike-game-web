@@ -17,7 +17,7 @@ export class Player {
     this.healthDisplayer = new HealthDisplayer();
 
     this.speed = 7.5;
-    this.health = 3;
+    this.health = 0;
   }
 
   public tick() {
