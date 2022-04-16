@@ -1,6 +1,6 @@
-import { game } from "..";
-import { Transform } from "../core/transform";
-import { Vec2 } from "../core/vec2";
+import { game } from "../..";
+import { Transform } from "./transform";
+import { Vec2 } from "../../core/vec2";
 
 export class Health {
   public current: number;
@@ -20,8 +20,8 @@ export class Health {
       let sprite: HTMLImageElement;
 
       health -= 1;
-      if (this.current >= 0) sprite = game.resources.SPRITES.HEART_FULL;
-      else if (this.current === -0.5) sprite = game.resources.SPRITES.HEART_HALF;
+      if (health >= 0) sprite = game.resources.SPRITES.HEART_FULL;
+      else if (health === -0.5) sprite = game.resources.SPRITES.HEART_HALF;
       else sprite = game.resources.SPRITES.HEART_EMPTY;
 
       game.ctx.drawImage(

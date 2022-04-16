@@ -1,6 +1,6 @@
-import { game } from "..";
-import { Maths } from "./maths";
-import { Vec2 } from "./vec2";
+import { game } from "../..";
+import { Maths } from "../../core/maths";
+import { Vec2 } from "../../core/vec2";
 
 export class Transform {
   public pos: Vec2;
