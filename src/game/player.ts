@@ -45,7 +45,7 @@ export class Player {
     if (game.input.getKey(INPUT_KEY.RIGHT)) velocity.x += this.speed;
 
     if (game.input.getKey(INPUT_KEY.ATTACK) && this.cooldown < 0) {
-      this.cooldown = 30;
+      this.cooldown = 15;
 
       for (let i = 0; i < game.world.enemies.length; ++i) {
         const enemy = game.world.enemies[i];

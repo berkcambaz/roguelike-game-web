@@ -5,6 +5,7 @@ import { Transform } from "./components/transform";
 import { Vec2 } from "../core/vec2";
 import { Health } from "./components/health";
 import { Collider } from "./components/collider";
+import { Physics } from "../core/physics";
 
 interface Components {
   transform: Transform;
@@ -24,7 +25,7 @@ export class Enemy {
       collider: new Collider(size)
     }
 
-    this.speed = 2.5;
+    this.speed = 5;
   }
 
   public tick() {
@@ -34,7 +35,24 @@ export class Enemy {
     if (this.components.health.current <= 0)
       game.world.enemies.splice(game.world.enemies.indexOf(this), 1);
 
-    transform.pos = Maths.towards(transform.pos, game.world.player.components.transform.pos, this.speed);
+    const targetPos = Maths.towards(transform.pos, game.world.player.components.transform.pos, this.speed);
+
+    let colliding = false;
+    for (let i = 0; i < game.world.enemies.length; ++i) {
+      const enemy = game.world.enemies[i];
+      if (enemy === this) continue;
+
+      colliding = Physics.box_box(
+        targetPos,
+        this.components.collider.size,
+        enemy.components.transform.pos,
+        enemy.components.collider.size,
+      );
+      if (colliding) break;
+    }
+
+    if (!colliding)
+      transform.pos = targetPos;
   }
 
   public render() {
