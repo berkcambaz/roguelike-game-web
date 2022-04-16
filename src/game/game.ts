@@ -1,12 +1,16 @@
 import { Camera } from "../core/camera";
+import { Input } from "../core/input";
 import { Resources } from "../core/resources";
 import { Signal } from "../core/signal";
+import { World } from "./world";
 
 interface GameSignals {
   onResize: Signal<[w: number, h: number]>;
 }
 
 export class Game {
+  public input!: Input;
+  public world!: World;
   public camera!: Camera;
   public resources!: Resources;
 
@@ -29,6 +33,7 @@ export class Game {
     const ctx = this.canvas.getContext("2d");
     if (!ctx) throw Error("HTML Canvas is not supported in the browser.");
     this.ctx = ctx;
+    this.ctx.imageSmoothingEnabled = false;
     document.body.appendChild(this.canvas);
 
     this.addEventListeners();
@@ -36,6 +41,8 @@ export class Game {
 
   public run() {
     // Initialize game core
+    this.input = new Input();
+    this.world = new World();
     this.camera = new Camera(0, 0, 1280, 720);
     this.resources = new Resources();
 
@@ -45,6 +52,7 @@ export class Game {
     // Async initializations
     Promise.resolve()
       .then(() => this.resources.loadSprites())
+      .then(() => { this.world.start() })
       .then(() => { this.loop(0) })
   }
 
@@ -65,11 +73,14 @@ export class Game {
   }
 
   private tick() {
-
+    this.world.tick();
   }
 
   private render(dt: number) {
     this.ctx.clearRect(0, 0, this.camera.w, this.camera.h);
+    this.ctx.imageSmoothingEnabled = false;
+
+    this.world.render(dt);
   }
 
   private addEventListeners() {
