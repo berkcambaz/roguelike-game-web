@@ -1,5 +1,6 @@
 import { game } from "..";
 import { INPUT_KEY } from "../core/input";
+import { Maths } from "../core/maths";
 import { Transform } from "../core/transform";
 import { Vec2 } from "../core/vec2";
 import { Health } from "./health";
@@ -9,7 +10,7 @@ interface Components {
   health: Health;
 }
 
-export class Player {
+export class Enemy {
   public components: Components;
 
   public speed: number;
@@ -22,7 +23,7 @@ export class Player {
     }
 
     this.speed = 7.5;
-    this.health = 0;
+    this.health = 1;
   }
 
   public tick() {
@@ -32,11 +33,6 @@ export class Player {
 
     let velocity = Vec2.zero();
 
-    if (game.input.getKey(INPUT_KEY.UP)) velocity.y += -this.speed;
-    if (game.input.getKey(INPUT_KEY.DOWN)) velocity.y += this.speed;
-    if (game.input.getKey(INPUT_KEY.LEFT)) velocity.x += -this.speed;
-    if (game.input.getKey(INPUT_KEY.RIGHT)) velocity.x += this.speed;
-
     transform.pos = Vec2.add(transform.pos, velocity);
   }
 
@@ -45,7 +41,7 @@ export class Player {
     const health = this.components.health;
 
     game.ctx.drawImage(
-      game.resources.SPRITES.HUMAN,
+      game.resources.SPRITES.BAT,
       transform.getX(),
       transform.getY(),
       transform.size.x,

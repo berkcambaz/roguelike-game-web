@@ -1,4 +1,5 @@
 import HUMAN from "../../res/sprites/human.png";
+import BAT from "../../res/sprites/bat.png";
 import HEART from "../../res/sprites/heart.png";
 import HEART_EMPTY from "../../res/sprites/heart_empty.png";
 import HEART_HALF from "../../res/sprites/heart_half.png";
@@ -6,6 +7,7 @@ import HEART_FULL from "../../res/sprites/heart_full.png";
 
 const sprites = {
   HUMAN,
+  BAT,
   HEART,
   HEART_EMPTY,
   HEART_HALF,
