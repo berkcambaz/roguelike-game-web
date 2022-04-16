@@ -19,8 +19,8 @@ export class Input {
 
     this.keyToId = {
       KeyW: INPUT_KEY.UP,
-      KeyA: INPUT_KEY.DOWN,
-      KeyS: INPUT_KEY.LEFT,
+      KeyS: INPUT_KEY.DOWN,
+      KeyA: INPUT_KEY.LEFT,
       KeyD: INPUT_KEY.RIGHT,
       Mouse1: INPUT_KEY.ATTACK,
     }
