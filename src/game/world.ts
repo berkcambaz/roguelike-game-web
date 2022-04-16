@@ -5,14 +5,14 @@ export class World {
   public player!: Player;
 
   public start() {
-    this.player = new Player(new Vec2(0, 0));
+    this.player = new Player(new Vec2(0, 0), new Vec2(64, 64));
   }
 
   public tick() {
     this.player.tick();
   }
 
-  public render(dt: number) {
-    this.player.render(dt);
+  public render() {
+    this.player.render();
   }
 }

@@ -22,6 +22,7 @@ export class Game {
   public readonly tps = 1000 / 30;
   private currentTime = 0;
   private accumulator = 0;
+  public dt = 0;
 
   constructor() {
     this.signals = {
@@ -69,18 +70,19 @@ export class Game {
       this.accumulator -= this.tps;
     }
 
-    this.render(this.accumulator / this.tps);
+    this.dt = this.accumulator / this.tps;
+    this.render();
   }
 
   private tick() {
     this.world.tick();
   }
 
-  private render(dt: number) {
+  private render() {
     this.ctx.clearRect(0, 0, this.camera.w, this.camera.h);
     this.ctx.imageSmoothingEnabled = false;
 
-    this.world.render(dt);
+    this.world.render();
   }
 
   private addEventListeners() {

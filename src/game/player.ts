@@ -1,21 +1,27 @@
 import { game } from "..";
 import { INPUT_KEY } from "../core/input";
 import { Maths } from "../core/maths";
+import { Transform } from "../core/transform";
 import { Vec2 } from "../core/vec2";
+import { HealthDisplayer } from "./health_displayer";
 
 export class Player {
-  public pos: Vec2;
-  public oldPos: Vec2;
-  public speed: number;
+  public transform: Transform;
+  public healthDisplayer: HealthDisplayer;
 
-  constructor(pos: Vec2) {
-    this.pos = pos;
-    this.oldPos = pos;
+  public speed: number;
+  public health: number;
+
+  constructor(pos: Vec2, size: Vec2) {
+    this.transform = new Transform(pos, size);
+    this.healthDisplayer = new HealthDisplayer();
+
     this.speed = 7.5;
+    this.health = 3;
   }
 
   public tick() {
-    this.oldPos = this.pos.clone();
+    this.transform.tick();
 
     let velocity = Vec2.zero();
 
@@ -24,16 +30,18 @@ export class Player {
     if (game.input.getKey(INPUT_KEY.LEFT)) velocity.x += -this.speed;
     if (game.input.getKey(INPUT_KEY.RIGHT)) velocity.x += this.speed;
 
-    this.pos = Vec2.add(this.pos, velocity);
+    this.transform.pos = Vec2.add(this.transform.pos, velocity);
   }
 
-  public render(dt: number) {
+  public render() {
     game.ctx.drawImage(
       game.resources.SPRITES.HUMAN,
-      Maths.interp(this.oldPos.x, this.pos.x, dt),
-      Maths.interp(this.oldPos.y, this.pos.y, dt),
-      64,
-      64
+      this.transform.getX(),
+      this.transform.getY(),
+      this.transform.size.x,
+      this.transform.size.y
     );
+
+    this.healthDisplayer.display(this.transform, this.health, 3);
   }
 }
