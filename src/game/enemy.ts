@@ -22,7 +22,7 @@ export class Enemy {
       health: new Health(3, 3)
     }
 
-    this.speed = 7.5;
+    this.speed = 2.5;
     this.health = 1;
   }
 
@@ -31,9 +31,7 @@ export class Enemy {
 
     transform.tick();
 
-    let velocity = Vec2.zero();
-
-    transform.pos = Vec2.add(transform.pos, velocity);
+    transform.pos = Maths.towards(transform.pos, game.world.player.components.transform.pos, this.speed);
   }
 
   public render() {

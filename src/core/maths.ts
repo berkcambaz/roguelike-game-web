@@ -14,7 +14,7 @@ export class Maths {
   public static towards(current: Vec2, target: Vec2, amount: number) {
     const diff = { x: target.x - current.x, y: target.y - current.y };
     const magnitude = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-    if (magnitude <= amount || magnitude === 0) return target;
+    if (magnitude <= amount || magnitude === 0) return target.clone();
     return new Vec2(current.x + diff.x / magnitude * amount, current.y + diff.y / magnitude * amount);
   }
 }
